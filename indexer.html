@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Math Adventure</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .chat-container {
+            height: 300px;
+            overflow-y: auto;
+            border-radius: 10px;
+            background: #f8f9fa;
+        }
+        .chat-message {
+            margin: 10px;
+            padding: 10px;
+            border-radius: 15px;
+            max-width: 80%;
+        }
+        .assistant-message {
+            background: #e3f2fd;
+            margin-right: auto;
+        }
+        .user-message {
+            background: #f5f5f5;
+            margin-left: auto;
+        }
+        .formula-input {
+            font-family: monospace;
+        }
+        .choice-card {
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .choice-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .selected {
+            background-color: #e3f2fd;
+            border: 2px solid #1976d2;
+        }
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+        .streak-counter {
+            font-size: 1.2em;
+            color: #f57c00;
+        }
+        .achievement {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px;
+            border-radius: 10px;
+            background: #4caf50;
+            color: white;
+            animation: slideIn 0.5s ease-out;
+            z-index: 1000;
+        }
+        @keyframes slideIn {
+            from { transform: translateX(100%); }
+            to { transform: translateX(0); }
+        }
+        .progress {
+            height: 10px;
+        }
+        .difficulty-badge {
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.9em;
+            margin-left: 10px;
+        }
+        .easy { background-color: #81c784; }
+        .medium { background-color: #fff176; }
+        .hard { background-color: #ff8a65; }
+    </style>
+</head>
+<body>
+    <div class="container py-4">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card shadow">
+                    <div class="card-header bg-primary text-white">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h3 class="mb-0">Math Adventure</h3>
+                            <div class="d-flex align-items-center">
+                                <select id="difficulty" class="form-select form-select-sm me-3" style="width: auto;">
+                                    <option value="easy">Easy</option>
+                                    <option value="medium">Medium</option>
+                                    <option value="hard">Hard</option>
+                                </select>
+                                <div class="streak-counter me-3">
+                                    🔥 Streak: <span id="streak">0</span>
+                                </div>
+                                <div>
+                                    Score: <span id="score">0</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="progress mb-3">
+                            <div id="level-progress" class="progress-bar bg-success" role="progressbar" style="width: 0%"></div>
+                        </div>
+                        <div id="chat-container" class="chat-container mb-3"></div>
+                        <div id="game-container">
+                            <div id="input-section" class="mb-3">
+                                <input type="text" id="formula-input" class="form-control formula-input mb-2" placeholder="Type your formula here (e.g., a*b)">
+                                <div class="form-text mb-3">Use basic operators: +, -, *, /</div>
+                                <div id="choices-container" class="row g-3 mb-3"></div>
+                                <button id="submit-btn" class="btn btn-primary w-100">Submit Answer</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const characters = {
+            assistant: {
+                name: "Professor Pi",
+                avatar: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='45' fill='%234CAF50'/%3E%3Ctext x='50' y='65' font-size='40' text-anchor='middle' fill='white'%3E𝜋%3C/text%3E%3C/svg%3E"
+            }
+        };
+
+        const questions = {
+            easy: [
+                {
+                    intro: "Hey there! I'm Professor Pi. Let's solve an interesting problem about a rectangular garden.",
+                    context: "Imagine you're helping design a community garden. The organizers want to know the area they can plant in.",
+                    question: "The garden is rectangular with a length of 8 meters and width of 5 meters. What's its area?",
+                    choices: [
+                        { text: "40 square meters", value: 40 },
+                        { text: "13 square meters", value: 13 },
+                        { text: "26 square meters", value: 26 },
+                        { text: "45 square meters", value: 45 }
+                    ],
+                    correctAnswer: 40,
+                    correctFormula: "l*w",
+                    variables: { l: 8, w: 5 },
+                    explanation: "Perfect! The area of the garden is length × width. This means we can plant lots of vegetables!",
+                    followUp: "You're doing great! This knowledge will be super helpful for real-world projects."
+                },
+                {
+                    intro: "Let's help plan a birthday party!",
+                    context: "You're buying square paper napkins for the tables.",
+                    question: "If each napkin is 8 inches on each side, what's the perimeter of one napkin?",
+                    choices: [
+                        { text: "32 inches", value: 32 },
+                        { text: "24 inches", value: 24 },
+                        { text: "16 inches", value: 16 },
+                        { text: "64 inches", value: 64 }
+                    ],
+                    correctAnswer: 32,
+                    correctFormula: "4*s",
+                    variables: { s: 8 },
+                    explanation: "Great job! The perimeter is found by adding all sides, or multiplying one side by 4.",
+                    followUp: "Now you can help with party planning using math!"
+                }
+            ],
+            medium: [
+                {
+                    intro: "Time for some construction mathematics!",
+                    context: "An architect is designing a triangular skylight for a modern building.",
+                    question: "The triangular skylight has a base of 12 feet and height of 9 feet. What's its area?",
+                    choices: [
+                        { text: "54 square feet", value: 54 },
+                        { text: "108 square feet", value: 108 },
+                        { text: "21 square feet", value: 21 },
+                        { text: "63 square feet", value: 63 }
+                    ],
+                    correctAnswer: 54,
+                    correctFormula: "(b*h)/2",
+                    variables: { b: 12, h: 9 },
+                    explanation: "Excellent! The area of a triangle is (base × height) ÷ 2. This skylight will look stunning!",
+                    followUp: "You're becoming quite the mathematical architect!"
+                },
+                {
+                    intro: "Let's solve a problem about solar panels!",
+                    context: "A homeowner wants to install rectangular solar panels on their roof.",
+                    question: "Each panel is 6.5 feet long and 3.25 feet wide. What's the area of one panel?",
+                    choices: [
+                        { text: "21.125 square feet", value: 21.125 },
+                        { text: "19.75 square feet", value: 19.75 },
+                        { text: "23.5 square feet", value: 23.5 },
+                        { text: "18.25 square feet", value: 18.25 }
+                    ],
+                    correctAnswer: 21.125,
+                    correctFormula: "l*w",
+                    variables: { l: 6.5, w: 3.25 },
+                    explanation: "Well done! Working with decimals can be tricky, but you nailed it!",
+                    followUp: "These calculations are crucial for real-world solar installations."
+                }
+            ],
+            hard: [
+                {
+                    intro: "Let's tackle an advanced engineering problem!",
+                    context: "An engineer is designing a composite structure with multiple shapes.",
+                    question: "A structure consists of a rectangle (8×6 meters) with a triangle (base 8 meters, height 4 meters) on top. What's the total area?",
+                    choices: [
+                        { text: "64 square meters", value: 64 },
+                        { text: "48 square meters", value: 48 },
+                        { text: "80 square meters", value: 80 },
+                        { text: "72 square meters", value: 72 }
+                    ],
+                    correctAnswer: 64,
+                    correctFormula: "(l*w)+(b*h/2)",
+                    variables: { l: 8, w: 6, b: 8, h: 4 },
+                    explanation: "Excellent work! You combined the rectangle area (l×w) with the triangle area (b×h÷2).",
+                    followUp: "This is exactly how real engineers approach complex problems!"
+                },
+                {
+                    intro: "Time for some advanced landscaping!",
+                    context: "A landscape designer is creating a complex garden feature.",
+                    question: "A circular garden (radius 5m) has a square path (side 8m) around it. What's the difference in their areas?",
+                    choices: [
+                        { text: "78.5 square meters", value: 78.5 },
+                        { text: "64 square meters", value: 64 },
+                        { text: "14.5 square meters", value: 14.5 },
+                        { text: "28.7 square meters", value: 28.7 }
+                    ],
+                    correctAnswer: 14.5,
+                    correctFormula: "s*s-3.14*r*r",
+                    variables: { s: 8, r: 5 },
+                    explanation: "Outstanding! You calculated the square area (s²) minus the circle area (πr²).",
+                    followUp: "You're mastering complex geometric calculations!"
+                }
+            ]
+        };
+
+        let currentQuestion = 0;
+        let score = 0;
+        let streak = 0;
+        let selectedChoice = null;
+        let currentDifficulty = 'easy';
+        let currentQuestions = questions[currentDifficulty];
+
+        const chatContainer = document.getElementById('chat-container');
+        const formulaInput = document.getElementById('formula-input');
+        const choicesContainer = document.getElementById('choices-container');
+        const submitBtn = document.getElementById('submit-btn');
+        const scoreDisplay = document.getElementById('score');
+        const streakDisplay = document.getElementById('streak');
+        const levelProgress = document.getElementById('level-progress');
+        const difficultySelect = document.getElementById('difficulty');
+
+        difficultySelect.addEventListener('change', (e) => {
+            currentDifficulty = e.target.value;
+            currentQuestions = questions[currentDifficulty];
+            currentQuestion = 0;
+            score = 0;
+            streak = 0;
+            scoreDisplay.textContent = score;
+            streakDisplay.textContent = streak;
+            displayQuestion();
+        });
+
+        function addMessage(message, isUser = false) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `chat-message ${isUser ? 'user-message' : 'assistant-message'}`;
+            
+            if (!isUser) {
+                const avatarImg = document.createElement('img');
+                avatarImg.src = characters.assistant.avatar;
+                avatarImg.className = 'avatar';
+                messageDiv.prepend(avatarImg);
+            }
+            
+            messageDiv.innerHTML += message;
+            chatContainer.appendChild(messageDiv);
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        }
+
+        function showAchievement(message) {
+            const achievement = document.createElement('div');
+            achievement.className = 'achievement';
+            achievement.textContent = message;
+            document.body.appendChild(achievement);
+            setTimeout(() => achievement.remove(), 3000);
+        }
+
+        function displayQuestion() {
+            const question = currentQuestions[currentQuestion];
+            
+            chatContainer.innerHTML = '';
+            
+            addMessage(`${question.intro} <span class="difficulty-badge ${currentDifficulty}">${currentDifficulty.charAt(0).toUpperCase() + currentDifficulty.slice(1)}</span>`);
+            setTimeout(() => {
+                addMessage(question.context);
+                setTimeout(() => {
+                    addMessage(question.question);
+                }, 1000);
+            }, 1000);
+
+            formulaInput.value = '';
+            selectedChoice = null;
+            
+            choicesContainer.innerHTML = question.choices.map((choice, index) => `
+                <div class="col-md-6">
+                    <div class="card choice-card p-3" data-index="${index}">
+                        <div class="card-body p-2">
+                            <p class="mb-0">${choice.text}</p>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+
+            document.querySelectorAll('.choice-card').forEach(card => {
+                card.addEventListener('click', () => selectChoice(card));
+            });
+
+            levelProgress.style.width = `${(currentQuestion / currentQuestions.length) * 100}%`;
+        }
+
+        function selectChoice(card) {
+            document.querySelectorAll('.choice-card').forEach(c => {
+                c.classList.remove('selected');
+            });
+            card.classList.add('selected');
+            selectedChoice = parseInt(card.dataset.index);
+        }
+
+        function evaluateFormula(formula, variables) {
+            try {
+                const keys = Object.keys(variables);
+                const values = Object.values(variables);
+                const func = new Function(...keys, `return ${formula}`);
+                return func(...values);
+            } catch (error) {
+                return null;
+            }
+        }
+
+        function checkAnswer() {
+    const question = currentQuestions[currentQuestion];
+    const userFormulaResult = evaluateFormula(formulaInput.value, question.variables);
+    const isFormulaCorrect = Math.abs(userFormulaResult - question.correctAnswer) < 0.001;
+    const selectedAnswer = selectedChoice !== null ? question.choices[selectedChoice].value : null;
+    const isChoiceCorrect = Math.abs(selectedAnswer - question.correctAnswer) < 0.001;
+
+    if (isFormulaCorrect && isChoiceCorrect) {
+        score += 10;
+        streak++;
+        addMessage(question.explanation);
+        setTimeout(() => addMessage(question.followUp), 1000);
+        
+        if (streak % 3 === 0) {
+            showAchievement(`🎉 Amazing! ${streak} correct answers in a row!`);
+        }
+        
+        scoreDisplay.textContent = score;
+        streakDisplay.textContent = streak;
+        
+        currentQuestion = (currentQuestion + 1) % currentQuestions.length;
+        setTimeout(displayQuestion, 2000);
+    } else {
+        streak = 0;
+        streakDisplay.textContent = streak;
+        addMessage("That's not quite right. Try again!", true);
+    }
+}
+
+submitBtn.addEventListener('click', checkAnswer);
+displayQuestion();
+</script>
+</body>
+</html>
