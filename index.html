@@ -132,108 +132,486 @@
 
         const questions = {
             easy: [
-                {
-                    intro: "Hey there! I'm Professor Pi. Let's solve an interesting problem about a rectangular garden.",
-                    context: "Imagine you're helping design a community garden. The organizers want to know the area they can plant in.",
-                    question: "The garden is rectangular with a length of 8 meters and width of 5 meters. What's its area?",
-                    choices: [
-                        { text: "40 square meters", value: 40 },
-                        { text: "13 square meters", value: 13 },
-                        { text: "26 square meters", value: 26 },
-                        { text: "45 square meters", value: 45 }
-                    ],
-                    correctAnswer: 40,
-                    correctFormula: "l*w",
-                    variables: { l: 8, w: 5 },
-                    explanation: "Perfect! The area of the garden is length × width. This means we can plant lots of vegetables!",
-                    followUp: "You're doing great! This knowledge will be super helpful for real-world projects."
-                },
-                {
-                    intro: "Let's help plan a birthday party!",
-                    context: "You're buying square paper napkins for the tables.",
-                    question: "If each napkin is 8 inches on each side, what's the perimeter of one napkin?",
-                    choices: [
-                        { text: "32 inches", value: 32 },
-                        { text: "24 inches", value: 24 },
-                        { text: "16 inches", value: 16 },
-                        { text: "64 inches", value: 64 }
-                    ],
-                    correctAnswer: 32,
-                    correctFormula: "4*s",
-                    variables: { s: 8 },
-                    explanation: "Great job! The perimeter is found by adding all sides, or multiplying one side by 4.",
-                    followUp: "Now you can help with party planning using math!"
-                }
+        {
+            intro: "Let's start with basic limits!",
+            context: "Understanding limits is fundamental to calculus.",
+            question: "What is the limit of (x² - 1)/(x - 1) as x approaches 1?",
+            choices: [
+                { text: "2", value: 2 },
+                { text: "1", value: 1 },
+                { text: "0", value: 0 },
+                { text: "Undefined", value: "undefined" }
             ],
-            medium: [
-                {
-                    intro: "Time for some construction mathematics!",
-                    context: "An architect is designing a triangular skylight for a modern building.",
-                    question: "The triangular skylight has a base of 12 feet and height of 9 feet. What's its area?",
-                    choices: [
-                        { text: "54 square feet", value: 54 },
-                        { text: "108 square feet", value: 108 },
-                        { text: "21 square feet", value: 21 },
-                        { text: "63 square feet", value: 63 }
-                    ],
-                    correctAnswer: 54,
-                    correctFormula: "(b*h)/2",
-                    variables: { b: 12, h: 9 },
-                    explanation: "Excellent! The area of a triangle is (base × height) ÷ 2. This skylight will look stunning!",
-                    followUp: "You're becoming quite the mathematical architect!"
-                },
-                {
-                    intro: "Let's solve a problem about solar panels!",
-                    context: "A homeowner wants to install rectangular solar panels on their roof.",
-                    question: "Each panel is 6.5 feet long and 3.25 feet wide. What's the area of one panel?",
-                    choices: [
-                        { text: "21.125 square feet", value: 21.125 },
-                        { text: "19.75 square feet", value: 19.75 },
-                        { text: "23.5 square feet", value: 23.5 },
-                        { text: "18.25 square feet", value: 18.25 }
-                    ],
-                    correctAnswer: 21.125,
-                    correctFormula: "l*w",
-                    variables: { l: 6.5, w: 3.25 },
-                    explanation: "Well done! Working with decimals can be tricky, but you nailed it!",
-                    followUp: "These calculations are crucial for real-world solar installations."
-                }
+            correctAnswer: 2,
+            correctFormula: "(x+1)",
+            variables: { x: 1 },
+            explanation: "Excellent! As x approaches 1, we can factor the numerator to get (x+1), which equals 2 when x=1.",
+            followUp: "This is a classic example of evaluating a limit by factoring!"
+        },
+        {
+            intro: "Here's a limit problem with infinity.",
+            context: "Let's explore what happens when numbers get very large.",
+            question: "What is the limit of (1/x) as x approaches infinity?",
+            choices: [
+                { text: "Infinity", value: "infinity" },
+                { text: "0", value: 0 },
+                { text: "1", value: 1 },
+                { text: "-1", value: -1 }
             ],
-            hard: [
-                {
-                    intro: "Let's tackle an advanced engineering problem!",
-                    context: "An engineer is designing a composite structure with multiple shapes.",
-                    question: "A structure consists of a rectangle (8×6 meters) with a triangle (base 8 meters, height 4 meters) on top. What's the total area?",
-                    choices: [
-                        { text: "64 square meters", value: 64 },
-                        { text: "48 square meters", value: 48 },
-                        { text: "80 square meters", value: 80 },
-                        { text: "72 square meters", value: 72 }
-                    ],
-                    correctAnswer: 64,
-                    correctFormula: "(l*w)+(b*h/2)",
-                    variables: { l: 8, w: 6, b: 8, h: 4 },
-                    explanation: "Excellent work! You combined the rectangle area (l×w) with the triangle area (b×h÷2).",
-                    followUp: "This is exactly how real engineers approach complex problems!"
-                },
-                {
-                    intro: "Time for some advanced landscaping!",
-                    context: "A landscape designer is creating a complex garden feature.",
-                    question: "A circular garden (radius 5m) has a square path (side 8m) around it. What's the difference in their areas?",
-                    choices: [
-                        { text: "78.5 square meters", value: 78.5 },
-                        { text: "64 square meters", value: 64 },
-                        { text: "14.5 square meters", value: 14.5 },
-                        { text: "28.7 square meters", value: 28.7 }
-                    ],
-                    correctAnswer: 14.5,
-                    correctFormula: "s*s-3.14*r*r",
-                    variables: { s: 8, r: 5 },
-                    explanation: "Outstanding! You calculated the square area (s²) minus the circle area (πr²).",
-                    followUp: "You're mastering complex geometric calculations!"
-                }
-            ]
-        };
+            correctAnswer: 0,
+            correctFormula: "1/x",
+            variables: { x: 1000000 },
+            explanation: "Perfect! As x gets infinitely large, 1/x gets infinitely close to 0.",
+            followUp: "This limit helps us understand asymptotic behavior!"
+        },
+        {
+            intro: "Let's try a basic derivative!",
+            context: "The derivative measures the rate of change at a point.",
+            question: "What is the derivative of f(x) = x² at x = 2?",
+            choices: [
+                { text: "4", value: 4 },
+                { text: "2", value: 2 },
+                { text: "8", value: 8 },
+                { text: "1", value: 1 }
+            ],
+            correctAnswer: 4,
+            correctFormula: "2*x",
+            variables: { x: 2 },
+            explanation: "Great! The derivative of x² is 2x, so at x=2, it equals 4.",
+            followUp: "You're getting the hang of basic derivatives!"
+        },
+        {
+            intro: "Time for some basic integration!",
+            context: "Integration helps us find areas and accumulation.",
+            question: "What is ∫(2x)dx from x=0 to x=3?",
+            choices: [
+                { text: "9", value: 9 },
+                { text: "6", value: 6 },
+                { text: "3", value: 3 },
+                { text: "18", value: 18 }
+            ],
+            correctAnswer: 9,
+            correctFormula: "x*x",
+            variables: { x: 3 },
+            explanation: "Perfect! Integrating 2x gives us x², and evaluating from 0 to 3 gives us 9.",
+            followUp: "You're mastering basic integration!"
+        },
+        {
+            intro: "Let's explore continuity!",
+            context: "Continuous functions have no breaks or jumps.",
+            question: "Is f(x) = |x| continuous at x = 0?",
+            choices: [
+                { text: "Yes", value: 1 },
+                { text: "No", value: 0 }
+            ],
+            correctAnswer: 1,
+            correctFormula: "Math.abs(x)",
+            variables: { x: 0 },
+            explanation: "Correct! The absolute value function is continuous everywhere, including at x = 0.",
+            followUp: "Understanding continuity is crucial for calculus!"
+        },
+        {
+            intro: "Here's a limit with a square root.",
+            context: "Square roots can create interesting limit problems.",
+            question: "What is the limit of √(x²+1) - x as x approaches infinity?",
+            choices: [
+                { text: "0", value: 0 },
+                { text: "1/2", value: 0.5 },
+                { text: "1", value: 1 },
+                { text: "Infinity", value: "infinity" }
+            ],
+            correctAnswer: 0,
+            correctFormula: "Math.sqrt(x*x+1)-x",
+            variables: { x: 1000000 },
+            explanation: "Excellent! This limit approaches 0 as x gets very large.",
+            followUp: "You're handling complex limits well!"
+        },
+        {
+            intro: "Let's try a basic chain rule problem.",
+            context: "The chain rule helps us differentiate composite functions.",
+            question: "What is the derivative of f(x) = (x + 1)² at x = 1?",
+            choices: [
+                { text: "4", value: 4 },
+                { text: "2", value: 2 },
+                { text: "3", value: 3 },
+                { text: "6", value: 6 }
+            ],
+            correctAnswer: 4,
+            correctFormula: "2*(x+1)",
+            variables: { x: 1 },
+            explanation: "Great! Using the chain rule, we get 2(x+1), which equals 4 at x=1.",
+            followUp: "The chain rule is essential for more complex derivatives!"
+        },
+        {
+            intro: "Time for a basic area problem!",
+            context: "Integration helps us find areas under curves.",
+            question: "What is the area under y = x from x=0 to x=2?",
+            choices: [
+                { text: "2", value: 2 },
+                { text: "1", value: 1 },
+                { text: "4", value: 4 },
+                { text: "3", value: 3 }
+            ],
+            correctAnswer: 2,
+            correctFormula: "(x*x)/2",
+            variables: { x: 2 },
+            explanation: "Perfect! The integral of x from 0 to 2 gives us 2.",
+            followUp: "Areas under curves have many real-world applications!"
+        },
+        {
+            intro: "Let's explore basic differentiation rules.",
+            context: "The power rule is fundamental for derivatives.",
+            question: "What is the derivative of f(x) = x³ at x = 2?",
+            choices: [
+                { text: "12", value: 12 },
+                { text: "8", value: 8 },
+                { text: "6", value: 6 },
+                { text: "4", value: 4 }
+            ],
+            correctAnswer: 12,
+            correctFormula: "3*x*x",
+            variables: { x: 2 },
+            explanation: "Excellent! Using the power rule, we get 3x², which equals 12 at x=2.",
+            followUp: "The power rule is a key tool in calculus!"
+        },
+        {
+            intro: "Basic limit evaluation time!",
+            context: "Some limits can be found by direct substitution.",
+            question: "What is the limit of (x² + 2x) as x approaches 1?",
+            choices: [
+                { text: "3", value: 3 },
+                { text: "4", value: 4 },
+                { text: "2", value: 2 },
+                { text: "1", value: 1 }
+            ],
+            correctAnswer: 3,
+            correctFormula: "x*x + 2*x",
+            variables: { x: 1 },
+            explanation: "Great! Simply substitute x=1 to get 1 + 2 = 3.",
+            followUp: "Direct substitution works when functions are continuous!"
+        }
+    ],
+    medium: [
+        {
+            intro: "Let's tackle L'Hôpital's Rule!",
+            context: "L'Hôpital's Rule helps us evaluate tricky limits.",
+            question: "What is the limit of (sin(x)/x) as x approaches 0?",
+            choices: [
+                { text: "1", value: 1 },
+                { text: "0", value: 0 },
+                { text: "π", value: 3.14159 },
+                { text: "Undefined", value: "undefined" }
+            ],
+            correctAnswer: 1,
+            correctFormula: "Math.cos(x)",
+            variables: { x: 0.000001 },
+            explanation: "Perfect! Using L'Hôpital's Rule, we differentiate top and bottom to get cos(0) = 1.",
+            followUp: "This is a classic application of L'Hôpital's Rule!"
+        },
+        {
+            intro: "Time for implicit differentiation!",
+            context: "Some curves require implicit differentiation.",
+            question: "For the circle x² + y² = 25, what is dy/dx at x = 3?",
+            choices: [
+                { text: "-3/4", value: -0.75 },
+                { text: "-4/3", value: -1.333 },
+                { text: "3/4", value: 0.75 },
+                { text: "4/3", value: 1.333 }
+            ],
+            correctAnswer: -1.333,
+            correctFormula: "-x/Math.sqrt(25-x*x)",
+            variables: { x: 3 },
+            explanation: "Excellent! Implicit differentiation gives us dy/dx = -x/y = -x/√(25-x²).",
+            followUp: "Implicit differentiation is crucial for complex curves!"
+        },
+        {
+            intro: "Let's explore partial derivatives!",
+            context: "Functions of multiple variables require partial derivatives.",
+            question: "For f(x,y) = x²y + xy², what is ∂f/∂x at point (2,1)?",
+            choices: [
+                { text: "4", value: 4 },
+                { text: "6", value: 6 },
+                { text: "8", value: 8 },
+                { text: "10", value: 10 }
+            ],
+            correctAnswer: 6,
+            correctFormula: "2*x*y + y*y",
+            variables: { x: 2, y: 1 },
+            explanation: "Great! ∂f/∂x = 2xy + y², which equals 6 at (2,1).",
+            followUp: "Partial derivatives are key to multivariable calculus!"
+        },
+        {
+            intro: "Time for integration by parts!",
+            context: "Some integrals require special techniques.",
+            question: "What is ∫x·sin(x)dx from 0 to π?",
+            choices: [
+                { text: "π", value: 3.14159 },
+                { text: "-1", value: -1 },
+                { text: "0", value: 0 },
+                { text: "2", value: 2 }
+            ],
+            correctAnswer: -1,
+            correctFormula: "-x*Math.cos(x) + Math.sin(x)",
+            variables: { x: Math.PI },
+            explanation: "Perfect! Using integration by parts: u=x, dv=sin(x)dx.",
+            followUp: "Integration by parts is essential for complex integrals!"
+        },
+        {
+            intro: "Let's study sequences!",
+            context: "Sequences can have limits too.",
+            question: "What is the limit of the sequence an = (n²+1)/(n²+2n) as n approaches infinity?",
+            choices: [
+                { text: "1", value: 1 },
+                { text: "0", value: 0 },
+                { text: "1/2", value: 0.5 },
+                { text: "2", value: 2 }
+            ],
+            correctAnswer: 1,
+            correctFormula: "(x*x+1)/(x*x+2*x)",
+            variables: { x: 1000000 },
+            explanation: "Excellent! Divide numerator and denominator by n² to find the limit.",
+            followUp: "This technique is useful for many sequence problems!"
+        },
+        {
+            intro: "Chain rule application!",
+            context: "The chain rule helps with composite functions.",
+            question: "If f(x) = sin(x²), what is f'(π/2)?",
+            choices: [
+                { text: "π cos(π²/4)", value: -1.923 },
+                { text: "-π cos(π²/4)", value: 1.923 },
+                { text: "2 cos(π²/4)", value: -1.222 },
+                { text: "-2 cos(π²/4)", value: 1.222 }
+            ],
+            correctAnswer: 1.923,
+            correctFormula: "2*x*Math.cos(x*x)",
+            variables: { x: Math.PI/2 },
+            explanation: "Great! Using chain rule: f'(x) = 2x·cos(x²)",
+            followUp: "The chain rule is essential for composite functions!"
+        },
+        {
+            intro: "Taylor series time!",
+            context: "Taylor series approximate functions near a point.",
+            question: "What is the second-degree Taylor polynomial for e^x at a=0?",
+            choices: [
+                { text: "1 + x + x²/2", value: 1 },
+                { text: "1 + x", value: 2 },
+                { text: "1 + x + x²", value: 3 },
+                { text: "1 + x²/2", value: 4 }
+            ],
+            correctAnswer: 1,
+            correctFormula: "1 + x + x*x/2",
+            variables: { x: 0 },
+            explanation: "Perfect! f(0)=1, f'(0)=1, f''(0)=1, so P₂(x)=1+x+x²/2",
+            followUp: "Taylor series are powerful approximation tools!"
+        },
+        {
+            intro: "Parametric derivatives!",
+            context: "Some curves are best described parametrically.",
+            question: "For x=cost, y=sint, what is dy/dx at t=π/4?",
+            choices: [
+                { text: "-1", value: -1 },
+                { text: "1", value: 1 },
+                { text: "-2", value: -2 },
+                { text: "2", value: 2 }
+            ],
+            correctAnswer: -1,
+            correctFormula: "-Math.cos(x)/Math.sin(x)",
+            variables: { x: Math.PI/4 },
+            explanation: "Excellent! dy/dx = -(cos t)/(sin t) at t=π/4",
+            followUp: "Parametric derivatives are key for motion problems!"
+        },
+        {
+            intro: "Optimization problems!",
+            context: "Calculus helps find maximum and minimum values.",
+            question: "Find the minimum value of f(x) = x² + 6x + 10",
+            choices: [
+                { text: "1", value: 1 },
+                { text: "10", value: 10 },
+                { text: "9", value: 9 },
+                { text: "8", value: 8 }
+            ],
+            correctAnswer: 1,
+            correctFormula: "Math.pow(-6/2, 2) + 6*(-6/2) + 10",
+            variables: { x: -3 },
+            explanation: "Great! f'(x)=2x+6, critical point at x=-3, minimum value is 1",
+            followUp: "Optimization is crucial in many real-world applications!"
+        },
+        {
+            intro: "Differential equations!",
+            context: "Some equations involve derivatives.",
+            question: "What is the solution to dy/dx = 2x with y(0)=1?",
+            choices: [
+                { text: "x² + 1", value: 1 },
+                { text: "2x + 1", value: 2 },
+                { text: "x + 1", value: 3 },
+                { text: "2x² + 1", value: 4 }
+            ],
+            correctAnswer: 1,
+            correctFormula: "x*x + 1",
+            variables: { x: 0 },
+            explanation: "Perfect! Integrate 2x to get x² + C, use initial condition.",
+            followUp: "Differential equations model many physical systems!"
+        }
+    ],
+    hard: [
+        {
+            intro: "Complex related rates!",
+            context: "A conical tank is being filled with water.",
+            question: "If water is being poured at 10 cubic meters per minute into a conical tank with radius 3m and height 4m, how fast is the height increasing when the height is 2m?",
+            choices: [
+                { text: "0.74 m/min", value: 0.74 },
+                { text: "1.11 m/min", value: 1.11 },
+                { text: "0.89 m/min", value: 0.89 },
+                { text: "1.47 m/min", value: 1.47 }
+            ],
+            correctAnswer: 0.89,
+            correctFormula: "10/(Math.PI*(3*h/4)*(3*h/4))",
+            variables: { h: 2 },
+            explanation: "Excellent! Using related rates with V = πr²h/3 and r = (3h/4).",
+            followUp: "Related rates problems connect multiple changing quantities!"
+        },
+        {
+            intro: "Vector calculus challenge!",
+            context: "Let's work with vector fields.",
+            question: "Find the divergence of F(x,y) = (x²y, xy²) at point (2,1)",
+            choices: [
+                { text: "4", value: 4 },
+                { text: "6", value: 6 },
+                { text: "8", value: 8 },
+                { text: "10", value: 10 }
+            ],
+            correctAnswer: 6,
+            correctFormula: "2*x*y + x*2*y",
+            variables: { x: 2, y: 1 },
+            explanation: "Perfect! div F = ∂/∂x(x²y) + ∂/∂y(xy²) = 2xy + x(2y)",
+            followUp: "Vector calculus is essential in physics and engineering!"
+        },
+        {
+            intro: "Multiple integration!",
+            context: "Let's find the volume under a surface.",
+            question: "Calculate ∫∫(x+y)dA over the triangle with vertices (0,0), (1,0), and (1,1)",
+            choices: [
+                { text: "7/6", value: 1.167 },
+                { text: "5/6", value: 0.833 },
+                { text: "3/4", value: 0.75 },
+                { text: "2/3", value: 0.667 }
+            ],
+            correctAnswer: 0.833,
+            correctFormula: "(1/2)*(1+1/3)",
+            variables: { x: 1 },
+            explanation: "Great! Set up double integral and use correct bounds.",
+            followUp: "Multiple integrals are key for volume calculations!"
+        },
+        {
+            intro: "Series convergence!",
+            context: "Determine if infinite series converge.",
+            question: "Does the series Σ(n²/(2^n)) from n=1 to ∞ converge?",
+            choices: [
+                { text: "Yes", value: 1 },
+                { text: "No", value: 0 }
+            ],
+            correctAnswer: 1,
+            correctFormula: "1",
+            variables: { x: 1 },
+            explanation: "Correct! Use ratio test: lim(n→∞)|a(n+1)/a(n)| = 1/2 < 1",
+            followUp: "Series convergence tests are crucial in analysis!"
+        },
+        {
+            intro: "Complex optimization!",
+            context: "Find maximum volume with constraints.",
+            question: "A box with total surface area 64 cm² has square base. What height maximizes volume?",
+            choices: [
+                { text: "2 cm", value: 2 },
+                { text: "4 cm", value: 4 },
+                { text: "8/3 cm", value: 2.667 },
+                { text: "16/3 cm", value: 5.333 }
+            ],
+            correctAnswer: 2.667,
+            correctFormula: "8/3",
+            variables: { x: 1 },
+            explanation: "Perfect! Use Lagrange multipliers with surface area constraint.",
+            followUp: "Constrained optimization appears in many real problems!"
+        },
+        {
+            intro: "Parametric surfaces!",
+            context: "Calculate surface area of parametric surface.",
+            question: "Find the surface area of z = x² + y² over the disk x² + y² ≤ 1",
+            choices: [
+                { text: "2π", value: 6.283 },
+                { text: "3π", value: 9.425 },
+                { text: "4π", value: 12.566 },
+                { text: "5π", value: 15.708 }
+            ],
+            correctAnswer: 9.425,
+            correctFormula: "3*Math.PI",
+            variables: { x: 1 },
+            explanation: "Excellent! Use surface area formula with correct integration.",
+            followUp: "Surface integrals are important in physics!"
+        },
+        {
+            intro: "Complex line integrals!",
+            context: "Calculate work done by force field.",
+            question: "Evaluate ∫(x²dy + y²dx) along the curve x=cos(t), y=sin(t) from t=0 to t=2π",
+            choices: [
+                { text: "0", value: 0 },
+                { text: "π", value: 3.142 },
+                { text: "2π", value: 6.283 },
+                { text: "4π", value: 12.566 }
+            ],
+            correctAnswer: 0,
+            correctFormula: "0",
+            variables: { x: 1 },
+            explanation: "Perfect! The integral equals zero because the path is closed.",
+            followUp: "Line integrals are fundamental in vector analysis!"
+        },
+        {
+            intro: "Improper integrals!",
+            context: "Evaluate integrals with infinite bounds.",
+            question: "Evaluate ∫(1/(1+x²))dx from -∞ to ∞",
+            choices: [
+                { text: "π", value: 3.142 },
+                { text: "π/2", value: 1.571 },
+                { text: "2π", value: 6.283 },
+                { text: "3π/2", value: 4.712 }
+            ],
+            correctAnswer: 3.142,
+            correctFormula: "Math.PI",
+            variables: { x: 1 },
+            explanation: "Great! Use symmetry and partial fractions decomposition.",
+            followUp: "Improper integrals appear in probability theory!"
+        },
+        {
+            intro: "Differential forms!",
+            context: "Work with differential forms in 3D.",
+            question: "Is the form ω = xdy∧dz + ydz∧dx + zdx∧dy closed?",
+            choices: [
+                { text: "Yes", value: 1 },
+                { text: "No", value: 0 }
+            ],
+            correctAnswer: 1,
+            correctFormula: "1",
+            variables: { x: 1, y: 1, z: 1 },
+            explanation: "Correct! dω = 0, so the form is closed. This is the volume form in R³.",
+            followUp: "Differential forms are crucial in modern geometry!"
+        },
+        {
+            intro: "Complex Taylor Series!",
+            context: "Analyze convergence of Taylor series.",
+            question: "What is the radius of convergence for the Taylor series of f(x) = 1/(1-x) about x=0?",
+            choices: [
+                { text: "1", value: 1 },
+                { text: "2", value: 2 },
+                { text: "0.5", value: 0.5 },
+                { text: "Infinity", value: Infinity }
+            ],
+            correctAnswer: 1,
+            correctFormula: "1",
+            variables: { x: 0 },
+            explanation: "Perfect! The series converges for |x| < 1 due to the singularity at x=1.",
+            followUp: "Understanding convergence is key for series applications!"
+        }
+    ]
+};
 
         let currentQuestion = 0;
         let score = 0;
@@ -297,7 +675,7 @@
                 setTimeout(() => {
                     addMessage(question.question);
                 }, 1000);
-            }, 1000);
+            }, 1500);
 
             formulaInput.value = '';
             selectedChoice = null;
@@ -369,6 +747,27 @@
 
 submitBtn.addEventListener('click', checkAnswer);
 displayQuestion();
+function evaluateCalculusFormula(formula, variables) {
+    try {
+        // Add calculus-specific constants
+        const e = Math.E;
+        const pi = Math.PI;
+        
+        // Create function with calculus helper methods
+        const keys = Object.keys(variables);
+        const values = Object.values(variables);
+        const func = new Function(...keys, `
+            const e = ${Math.E};
+            const pi = ${Math.PI};
+            return ${formula};
+        `);
+        
+        return func(...values);
+    } catch (error) {
+        console.error("Error evaluating calculus formula:", error);
+        return null;
+    }
+}
 </script>
 </body>
 </html>
